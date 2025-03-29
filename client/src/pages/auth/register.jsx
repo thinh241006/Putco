@@ -14,28 +14,76 @@ const initialState = {
 
 function AuthRegister() {
   const [formData, setFormData] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { toast } = useToast();
 
   function onSubmit(event) {
     event.preventDefault();
-    dispatch(registerUser(formData)).then((data) => {
-      if (data?.payload?.success) {
+    setIsLoading(true);
+    
+    // Validate required fields
+    if (!formData.userName || !formData.email || !formData.password) {
+      toast({
+        title: "Validation Error",
+        description: "Please fill in all required fields",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    // Validate password length
+    if (formData.password.length < 6) {
+      toast({
+        title: "Invalid Password",
+        description: "Password must be at least 6 characters long",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    dispatch(registerUser(formData))
+      .then((data) => {
+        if (data?.payload?.success) {
+          toast({
+            title: "Success!",
+            description: data?.payload?.message,
+          });
+          navigate("/auth/login");
+        } else {
+          toast({
+            title: "Registration Failed",
+            description: data?.payload?.message || "Something went wrong. Please try again.",
+            variant: "destructive",
+          });
+        }
+      })
+      .catch((error) => {
         toast({
-          title: data?.payload?.message,
-        });
-        navigate("/auth/login");
-      } else {
-        toast({
-          title: data?.payload?.message,
+          title: "Error",
+          description: error?.response?.data?.message || "Something went wrong. Please try again.",
           variant: "destructive",
         });
-      }
-    });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
-
-  console.log(formData);
 
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
@@ -55,10 +103,11 @@ function AuthRegister() {
       </div>
       <CommonForm
         formControls={registerFormControls}
-        buttonText={"Sign Up"}
+        buttonText={isLoading ? "Signing up..." : "Sign Up"}
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}
+        disabled={isLoading}
       />
     </div>
   );
