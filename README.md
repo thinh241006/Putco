@@ -5,6 +5,40 @@ Project compose of 2 services:
 1. Client (FrontEnd): [client folder](./client)
 2. Server (BackEnd): [server folder](./server)
 
+See the folder structure here:
+
+```bash
+client/
+├── src/
+│   ├── components/         # Reusable UI components
+│   │   ├── auth/          # Authentication components
+│   │   ├── admin-view/    # Admin dashboard components
+│   │   ├── shopping-view/ # Shopping interface components
+│   │   └── common/        # Shared components
+│   ├── pages/            # Page components
+│   │   ├── auth/         # Login/Register pages
+│   │   ├── admin-view/   # Admin dashboard pages
+│   │   └── shopping-view/# Shopping pages
+│   ├── store/            # Redux store
+│   │   └── auth-slice/   # Authentication state management
+│   └── App.jsx           # Main application component
+
+server/
+├── controllers/          # Business logic
+│   ├── auth/            # Authentication controllers
+│   ├── admin/           # Admin controllers
+│   └── shop/            # Shopping controllers
+├── models/              # Database models
+│   ├── User.js          # User model
+│   ├── Product.js       # Product model
+│   └── Order.js         # Order model
+├── routes/              # API routes
+│   ├── auth/           # Authentication routes
+│   ├── admin/          # Admin routes
+│   └── shop/           # Shopping routes
+└── server.js           # Main server file
+```
+
 <hr />
 
 ## Project structure modules
