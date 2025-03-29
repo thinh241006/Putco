@@ -1,15 +1,20 @@
 ## Project structure modules
 
 Project compose of 2 services:
-1. Client (FrontEnd): [current repository](./client)
-1. Server (BackEnd): [current repository](./server)
+1. Client (FrontEnd): [client folder](./client)
+2. Server (BackEnd): [server folder](./server)
 
 <hr />
 
 
-## Dependency Installation
+## Project structure modules
 
-Please follow the guide here: (COMING SOON)
+Guideline for contributions:
+1. Do not push directly to the repo
+2. Instead use git checkout <your-name>
+(Replace your name with quang/thinh/chi)
+3. Commit and push to your branch only (You should see your name next to current branch in terminal)
+4. Create a pull request to the main branch and wait for approval, done!
 
 ## Local Installation
 
