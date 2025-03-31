@@ -7,11 +7,28 @@ const registerUser = async (req, res) => {
   const { userName, email, password } = req.body;
 
   try {
-    const checkUser = await User.findOne({ email });
-    if (checkUser)
-      return res.json({
+    // Validate required fields
+    if (!userName || !email || !password) {
+      return res.status(400).json({
         success: false,
-        message: "User Already exists with the same email! Please try again",
+        message: "Please provide all required fields: username, email, and password",
+      });
+    }
+
+    // Check for existing email
+    const checkEmail = await User.findOne({ email });
+    if (checkEmail)
+      return res.status(400).json({
+        success: false,
+        message: "User already exists with this email! Please try again",
+      });
+
+    // Check for existing username
+    const checkUsername = await User.findOne({ userName });
+    if (checkUsername)
+      return res.status(400).json({
+        success: false,
+        message: "Username is already taken! Please choose a different username",
       });
 
     const hashPassword = await bcrypt.hash(password, 12);
@@ -28,9 +45,18 @@ const registerUser = async (req, res) => {
     });
   } catch (e) {
     console.log(e);
+    // Handle Mongoose validation errors
+    if (e.name === 'ValidationError') {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide all required fields correctly",
+        errors: Object.values(e.errors).map(err => err.message)
+      });
+    }
+    // Handle other errors
     res.status(500).json({
       success: false,
-      message: "Some error occured",
+      message: "An error occurred during registration. Please try again.",
     });
   }
 };

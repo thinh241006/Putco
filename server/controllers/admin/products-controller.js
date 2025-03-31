@@ -70,11 +70,19 @@ const addProduct = async (req, res) => {
       averageReview,
     } = req.body;
 
-    // Basic validation
-    if (!title || !description || !category || !brand || !price || !image) {
+    // Basic validation with specific messages
+    const missingFields = [];
+    if (!title) missingFields.push("Title");
+    if (!description) missingFields.push("Description");
+    if (!category) missingFields.push("Category");
+    if (!brand) missingFields.push("Brand");
+    if (!price) missingFields.push("Price");
+    if (!image) missingFields.push("Image");
+
+    if (missingFields.length > 0) {
       return res.status(400).json({
         success: false,
-        message: "All required fields must be provided",
+        message: `Please provide the following required fields: ${missingFields.join(", ")}`,
       });
     }
 
@@ -86,7 +94,7 @@ const addProduct = async (req, res) => {
     )) {
       return res.status(400).json({
         success: false,
-        message: "Product contains inappropriate content",
+        message: "Product contains inappropriate content. Please remove any offensive terms.",
       });
     }
 
@@ -109,9 +117,30 @@ const addProduct = async (req, res) => {
     });
   } catch (e) {
     console.log(e);
+    if (e.name === 'ValidationError') {
+      const errorMessages = Object.entries(e.errors).map(([field, err]) => {
+        switch (field) {
+          case 'description':
+            return `Description must be at least 10 characters long. Current length: ${err.value.length} characters`;
+          case 'salePrice':
+            return `Sale price (${err.value}) cannot be greater than regular price`;
+          case 'price':
+            return `Price must be a positive number`;
+          case 'totalStock':
+            return `Total stock must be a non-negative number`;
+          default:
+            return err.message;
+        }
+      });
+      return res.status(400).json({
+        success: false,
+        message: "Please fix the following issues:",
+        errors: errorMessages
+      });
+    }
     res.status(500).json({
       success: false,
-      message: e.message || "Error occurred while adding product",
+      message: "An unexpected error occurred while adding the product. Please try again.",
     });
   }
 };

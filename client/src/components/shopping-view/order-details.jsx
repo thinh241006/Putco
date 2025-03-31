@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useSelector } from "react-redux";
 import { Badge } from "../ui/badge";
 import { DialogContent } from "../ui/dialog";
@@ -39,8 +40,8 @@ function ShoppingOrderDetailsView({ orderDetails }) {
                   orderDetails?.orderStatus === "confirmed"
                     ? "bg-green-500"
                     : orderDetails?.orderStatus === "rejected"
-                    ? "bg-red-600"
-                    : "bg-black"
+                      ? "bg-red-600"
+                      : "bg-black"
                 }`}
               >
                 {orderDetails?.orderStatus}

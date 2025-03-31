@@ -61,6 +61,16 @@ function AdminProducts() {
             setFormData(initialFormData);
             setOpenCreateProductsDialog(false);
             setCurrentEditedId(null);
+            toast({
+              title: "Success!",
+              description: "Product has been updated successfully.",
+            });
+          } else {
+            toast({
+              title: "Update Failed",
+              description: data?.payload?.message || "Unable to update product. Please try again.",
+              variant: "destructive",
+            });
           }
         })
       : dispatch(
@@ -75,7 +85,19 @@ function AdminProducts() {
             setImageFile(null);
             setFormData(initialFormData);
             toast({
-              title: "Product add successfully",
+              title: "Success!",
+              description: "Product has been added successfully.",
+            });
+          } else {
+            const errorMessage = data?.payload?.errors 
+              ? data.payload.errors.map((error, index) => `${index + 1}. ${error}`).join("\n")
+              : data?.payload?.message || "Unable to add product. Please try again.";
+
+            toast({
+              title: "Add Product Failed",
+              description: errorMessage,
+              variant: "destructive",
+              duration: 5000, // Show for 5 seconds
             });
           }
         });
