@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
@@ -69,8 +70,8 @@ function ShoppingOrders() {
                           orderItem?.orderStatus === "confirmed"
                             ? "bg-green-500"
                             : orderItem?.orderStatus === "rejected"
-                            ? "bg-red-600"
-                            : "bg-black"
+                              ? "bg-red-600"
+                              : "bg-black"
                         }`}
                       >
                         {orderItem?.orderStatus}
