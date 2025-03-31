@@ -52,7 +52,7 @@ function ProductImageUpload({
     try {
       const response = await axios.post(
         "http://localhost:5300/api/admin/products/upload-image",
-        data
+        data,
       );
       console.log("Upload response:", response.data);
 
