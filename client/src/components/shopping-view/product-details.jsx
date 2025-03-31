@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { StarIcon } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
@@ -27,39 +28,42 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     setRating(getRating);
   }, []);
 
-  const handleAddToCart = useCallback((getCurrentProductId, getTotalStock) => {
-    let getCartItems = cartItems.items || [];
+  const handleAddToCart = useCallback(
+    (getCurrentProductId, getTotalStock) => {
+      let getCartItems = cartItems.items || [];
 
-    if (getCartItems.length) {
-      const indexOfCurrentItem = getCartItems.findIndex(
-        (item) => item.productId === getCurrentProductId
-      );
-      if (indexOfCurrentItem > -1) {
-        const getQuantity = getCartItems[indexOfCurrentItem].quantity;
-        if (getQuantity + 1 > getTotalStock) {
-          toast({
-            title: `Only ${getQuantity} quantity can be added for this item`,
-            variant: "destructive",
-          });
-          return;
+      if (getCartItems.length) {
+        const indexOfCurrentItem = getCartItems.findIndex(
+          (item) => item.productId === getCurrentProductId,
+        );
+        if (indexOfCurrentItem > -1) {
+          const getQuantity = getCartItems[indexOfCurrentItem].quantity;
+          if (getQuantity + 1 > getTotalStock) {
+            toast({
+              title: `Only ${getQuantity} quantity can be added for this item`,
+              variant: "destructive",
+            });
+            return;
+          }
         }
       }
-    }
-    dispatch(
-      addToCart({
-        userId: user?.id,
-        productId: getCurrentProductId,
-        quantity: 1,
-      })
-    ).then((data) => {
-      if (data?.payload?.success) {
-        dispatch(fetchCartItems(user?.id));
-        toast({
-          title: "Product is added to cart",
-        });
-      }
-    });
-  }, [cartItems, dispatch, user?.id, toast]);
+      dispatch(
+        addToCart({
+          userId: user?.id,
+          productId: getCurrentProductId,
+          quantity: 1,
+        }),
+      ).then((data) => {
+        if (data?.payload?.success) {
+          dispatch(fetchCartItems(user?.id));
+          toast({
+            title: "Product is added to cart",
+          });
+        }
+      });
+    },
+    [cartItems, dispatch, user?.id, toast],
+  );
 
   const handleDialogClose = useCallback(() => {
     setOpen(false);
@@ -100,7 +104,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
         productId: productDetails?._id,
         rating,
         message: reviewMsg.trim(),
-      })
+      }),
     ).then((data) => {
       if (data?.payload?.success) {
         dispatch(getReviews(productDetails?._id));
@@ -184,7 +188,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                 onClick={() =>
                   handleAddToCart(
                     productDetails?._id,
-                    productDetails?.totalStock
+                    productDetails?.totalStock,
                   )
                 }
               >
@@ -241,9 +245,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               >
                 Submit
               </Button>
-              {error && (
-                <p className="text-sm text-red-500 mt-2">{error}</p>
-              )}
+              {error && <p className="text-sm text-red-500 mt-2">{error}</p>}
             </div>
           </div>
         </div>

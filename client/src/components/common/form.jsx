@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import {

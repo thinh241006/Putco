@@ -31,23 +31,10 @@ const CLIENT_PORT = process.env.CLIENT_PORT || 5173;
 const CLIENT_PORT_ALT = process.env.CLIENT_PORT_ALT || 5174;
 
 // CORS configuration
-app.use(
-  cors({
-    origin: [
-      `http://localhost:${CLIENT_PORT}`,
-      `http://localhost:${CLIENT_PORT_ALT}`
-    ],
-    methods: ["GET", "POST", "DELETE", "PUT"],
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "Cache-Control",
-      "Expires",
-      "Pragma",
-    ],
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
 
 // Middleware
 app.use(cookieParser());
