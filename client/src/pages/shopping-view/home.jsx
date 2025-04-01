@@ -7,16 +7,19 @@ import {
   BabyIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  CloudLightning,
   Heater,
   Images,
   Shirt,
-  ShirtIcon,
   ShoppingBasket,
   UmbrellaIcon,
   WashingMachine,
   WatchIcon,
 } from "lucide-react";
+import Salon from "../../assets/salon.svg";
+import Dress from "../../assets/Dress.svg";
+import Lamp from "../../assets/Lamp.svg";
+import Utensils from "../../assets/Utensils.svg";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,23 +33,16 @@ import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/components/ui/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
+import "@fontsource/jua"; 
 
 const categoriesWithIcon = [
-  { id: "men", label: "Men", icon: ShirtIcon },
-  { id: "women", label: "Women", icon: CloudLightning },
-  { id: "kids", label: "Kids", icon: BabyIcon },
-  { id: "accessories", label: "Accessories", icon: WatchIcon },
-  { id: "footwear", label: "Footwear", icon: UmbrellaIcon },
+  { id: "restaurant", label: "Restaurant", icon: () => <img src={Utensils} alt="Utensils" className="w-12 h-12 " />},
+  { id: "lamp", label: "Home Decoration", icon: () => <img src={Lamp} alt="Lamp" className="w-12 h-12 " /> },
+  { id: "clothes", label: "Clothes", icon: () => <img src={Dress} alt="Dress" className="w-12 h-12 " /> },
+  { id: "accessories", label: "Accessories", icon: () => <img src={Salon} alt="Salon" className="w-12 h-12 " /> }
 ];
 
-const brandsWithIcon = [
-  { id: "nike", label: "Nike", icon: Shirt },
-  { id: "adidas", label: "Adidas", icon: WashingMachine },
-  { id: "puma", label: "Puma", icon: ShoppingBasket },
-  { id: "levi", label: "Levi's", icon: Airplay },
-  { id: "zara", label: "Zara", icon: Images },
-  { id: "h&m", label: "H&M", icon: Heater },
-];
+
 function ShoppingHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { productList, productDetails } = useSelector(
@@ -163,43 +159,25 @@ function ShoppingHome() {
           <ChevronRightIcon className="w-4 h-4" />
         </Button>
       </div>
-      <section className="py-12 bg-gray-50">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Shop by category
+          <h2 className="text-6xl font-bold text-center mb-8 text-text-orange font-jua">
+            CATEGORIES
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {categoriesWithIcon.map((categoryItem) => (
               <Card
                 key={categoryItem.id}
-                onClick={() =>
-                  handleNavigateToListingPage(categoryItem, "category")
-                }
-                className="cursor-pointer hover:shadow-lg transition-shadow"
+                onClick={() => handleNavigateToListingPage(categoryItem, "category")}
+                className="cursor-pointer hover:shadow-md transition-all border-none shadow-none h-full min-h-[250px] flex flex-col"
               >
-                <CardContent className="flex flex-col items-center justify-center p-6">
-                  <categoryItem.icon className="w-12 h-12 mb-4 text-primary" />
-                  <span className="font-bold">{categoryItem.label}</span>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">Shop by Brand</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {brandsWithIcon.map((brandItem) => (
-              <Card
-                key={brandItem.id}
-                onClick={() => handleNavigateToListingPage(brandItem, "brand")}
-                className="cursor-pointer hover:shadow-lg transition-shadow"
-              >
-                <CardContent className="flex flex-col items-center justify-center p-6">
-                  <brandItem.icon className="w-12 h-12 mb-4 text-primary" />
-                  <span className="font-bold">{brandItem.label}</span>
+                <CardContent className="flex flex-col items-center justify-center p-8 gap-4">
+                  <div className="p-4 rounded-full">
+                    <categoryItem.icon />
+                  </div>
+                  <span className="font-bold text-lg uppercase tracking-wider text-text-gray font-jua">
+                    {categoryItem.label}
+                  </span>
                 </CardContent>
               </Card>
             ))}
