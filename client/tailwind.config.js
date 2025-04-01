@@ -51,7 +51,18 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+
+        navbar: "#FF6B00",       
+        'text-light': "#F7E7C1",
+        'text-orange': "#FF6B00",
+        'text-gray': "#828282"
+
       },
+
+      fontFamily: {
+        jua: ["Jua", "sans-serif"],
+      },
+      
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
