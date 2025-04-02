@@ -42,7 +42,13 @@ export const fetchLocationDetails = createAsyncThunk(
           withCredentials: true
         }
       );
-      return result?.data;
+      return {
+        ...result.data,
+        data: {
+          ...result.data.data,
+          place_id: placeId
+        }
+      };
     } catch (error) {
       throw error;
     }

@@ -60,6 +60,12 @@ export const API_ENDPOINTS = {
       search: "http://localhost:5300/api/shop/locations/search",
       favorites: "http://localhost:5300/api/shop/locations/favorites",
     },
+    reviews: {
+      add: `${API_BASE_URL}/shop/reviews`,
+      get: (placeId) => `${API_BASE_URL}/shop/reviews/${placeId}`,
+      delete: (reviewId) => `${API_BASE_URL}/shop/reviews/${reviewId}`,
+      update: (reviewId) => `${API_BASE_URL}/shop/reviews/${reviewId}`,
+    },
   },
   common: {
     feature: {

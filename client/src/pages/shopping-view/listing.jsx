@@ -19,6 +19,8 @@ import { ArrowUpDownIcon, Store } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import axios from "axios";
+import { API_ENDPOINTS } from "@/config/api";
 
 function ShoppingListing() {
   const dispatch = useDispatch();
@@ -30,6 +32,7 @@ function ShoppingListing() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
   const { toast } = useToast();
+  const [userReviews, setUserReviews] = useState({});
 
   const categorySearchParam = searchParams.get("category") || "restaurant";
 
@@ -82,6 +85,26 @@ function ShoppingListing() {
       }),
     );
   }, [dispatch, categorySearchParam]);
+
+  useEffect(() => {
+    // Fetch user reviews for all locations
+    const fetchUserReviews = async () => {
+      if (!locationList?.length) return;
+      
+      const reviews = {};
+      for (const location of locationList) {
+        try {
+          const response = await axios.get(API_ENDPOINTS.shop.reviews.get(location.place_id));
+          reviews[location.place_id] = response.data.data;
+        } catch (error) {
+          console.error(`Error fetching reviews for ${location.place_id}:`, error);
+        }
+      }
+      setUserReviews(reviews);
+    };
+
+    fetchUserReviews();
+  }, [locationList]);
 
   const selectedCategory =
     placeTypes.find((type) => type.id === categorySearchParam) || placeTypes[0];
@@ -151,6 +174,44 @@ function ShoppingListing() {
     return true;
   });
 
+  const handleEditReview = (review) => {
+    setOpenDetailsDialog(true);
+    dispatch(fetchLocationDetails(review.placeId));
+  };
+
+  const handleDeleteReview = async (reviewId) => {
+    try {
+      const response = await axios.delete(
+        API_ENDPOINTS.shop.reviews.delete(reviewId),
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (response.data.success) {
+        toast({
+          title: "Review Deleted",
+          description: "Your review has been deleted.",
+        });
+        // Refresh user reviews
+        const updatedReviews = { ...userReviews };
+        Object.keys(updatedReviews).forEach(placeId => {
+          updatedReviews[placeId] = updatedReviews[placeId].filter(
+            review => review._id !== reviewId
+          );
+        });
+        setUserReviews(updatedReviews);
+      }
+    } catch (error) {
+      console.error("Error deleting review:", error);
+      toast({
+        title: "Error",
+        description: error.response?.data?.message || "Failed to delete review. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
       <ProductFilter filters={filters} handleFilter={handleFilter} />
@@ -219,11 +280,16 @@ function ShoppingListing() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
           {filteredLocations.length > 0 ? (
-            filteredLocations.map((locationItem) => (
+            filteredLocations.map((location) => (
               <ShoppingProductTile
-                key={locationItem.place_id}
+                key={location.place_id}
+                product={{
+                  ...location,
+                  userReviews: userReviews[location.place_id] || [],
+                }}
                 handleGetProductDetails={handleGetProductDetails}
-                product={locationItem}
+                onEditReview={handleEditReview}
+                onDeleteReview={handleDeleteReview}
               />
             ))
           ) : (

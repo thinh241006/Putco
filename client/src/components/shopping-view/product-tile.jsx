@@ -2,7 +2,7 @@
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
-import { StarIcon, Clock, MapPin } from "lucide-react";
+import { StarIcon, Clock, MapPin, Image } from "lucide-react";
 import StarRatingComponent from "../common/star-rating";
 
 function ShoppingProductTile({
@@ -21,14 +21,21 @@ function ShoppingProductTile({
     <Card className="w-full max-w-sm mx-auto">
       <div onClick={() => handleGetProductDetails(product?.place_id)}>
         <div className="relative">
-          <img
-            src={imageUrl}
-            alt={product?.name}
-            className="w-full h-[300px] object-cover rounded-t-lg"
-            onError={(e) => {
-              e.target.src = fallbackImage;
-            }}
-          />
+          {photoReference ? (
+            <img
+              src={imageUrl}
+              alt={product?.name}
+              className="w-full h-[300px] object-cover rounded-t-lg"
+              onError={(e) => {
+                console.error("Error loading image:", e);
+                e.target.src = fallbackImage;
+              }}
+            />
+          ) : (
+            <div className="w-full h-[300px] bg-muted rounded-t-lg flex items-center justify-center">
+              <Image className="w-12 h-12 text-muted-foreground" />
+            </div>
+          )}
           {product?.rating && (
             <Badge className="absolute top-2 right-2 bg-white/80 text-black">
               <StarIcon className="w-4 h-4 fill-yellow-500 mr-1" />
