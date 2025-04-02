@@ -12,6 +12,8 @@ const shopAddressRouter = require("./routes/shop/address-routes");
 const shopOrderRouter = require("./routes/shop/order-routes");
 const shopSearchRouter = require("./routes/shop/search-routes");
 const shopReviewRouter = require("./routes/shop/review-routes");
+const shopLocationsRouter = require("./routes/shop/locations-routes");
+const shopUserReviewsRouter = require("./routes/shop/user-reviews-routes");
 
 const commonFeatureRouter = require("./routes/common/feature-routes");
 
@@ -32,7 +34,7 @@ const CLIENT_PORT_ALT = process.env.CLIENT_PORT_ALT || 5174;
 
 // CORS configuration
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173', 'http://localhost:5174'],
   credentials: true
 }));
 
@@ -61,6 +63,8 @@ app.use("/api/shop/address", shopAddressRouter);
 app.use("/api/shop/order", shopOrderRouter);
 app.use("/api/shop/search", shopSearchRouter);
 app.use("/api/shop/review", shopReviewRouter);
+app.use("/api/shop/locations", shopLocationsRouter);
+app.use("/api/shop/reviews", shopUserReviewsRouter);
 
 app.use("/api/common/feature", commonFeatureRouter);
 
