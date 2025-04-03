@@ -52,7 +52,8 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
 
-        navbar: "#FF6B00",      
+        navbar: "#FF6B00",
+        listyellow:"#F6BA02 ",     
         'text-light': "#F7E7C1",
         'text-orange': "#FF6B00",
         'text-gray': "#828282"

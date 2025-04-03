@@ -18,7 +18,7 @@ function ShoppingProductTile({
     : fallbackImage;
 
   return (
-    <Card className="w-full max-w-sm mx-auto">
+    <Card className="w-full max-w-sm mx-auto bg-listyellow">
       <div onClick={() => handleGetProductDetails(product?.place_id)}>
         <div className="relative">
           {photoReference ? (
@@ -50,10 +50,10 @@ function ShoppingProductTile({
           )}
         </div>
         <CardContent className="p-4">
-          <h2 className="text-xl font-bold mb-2">{product?.name}</h2>
+          <h2 className="text-2xl font-koulen mb-2 text-white">{product?.name}</h2>
           <div className="flex items-center gap-2 mb-2">
             <MapPin className="w-4 h-4" />
-            <span className="text-[16px] text-muted-foreground">
+            <span className="text-[16px] text-black font-koulen">
               {product?.vicinity}
             </span>
           </div>
@@ -67,7 +67,7 @@ function ShoppingProductTile({
       <CardFooter>
         <Button
           onClick={() => handleGetProductDetails(product?.place_id)}
-          className="w-full"
+          className="w-full text-black font-koulen bg-text-light text-2xl border-b-4 border- border-navbar hover:bg-navbar hover:text-text-light transition-colors duration-300"  
         >
           View Details
         </Button>
