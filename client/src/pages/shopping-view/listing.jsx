@@ -31,6 +31,7 @@ function ShoppingListing() {
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
+  const [prevCategory, setPrevCategory] = useState(searchParams.get("category") || "restaurant");
   const { toast } = useToast();
   const [userReviews, setUserReviews] = useState({});
 
@@ -67,15 +68,25 @@ function ShoppingListing() {
   }
 
   function handleGetProductDetails(getCurrentProductId) {
+    setOpenDetailsDialog(false); // Close dialog first
     dispatch(fetchLocationDetails(getCurrentProductId));
   }
 
   useEffect(() => {
-    if (locationDetails !== null) setOpenDetailsDialog(true);
-  }, [locationDetails]);
+    // Reset state when category changes
+    if (categorySearchParam !== prevCategory) {
+      dispatch({ type: 'locations/clearLocationDetails' });
+      setOpenDetailsDialog(false);
+      setPrevCategory(categorySearchParam);
+    }
+    
+    // Only open dialog if we have new location details
+    if (locationDetails && locationDetails.place_id) {
+      setOpenDetailsDialog(true);
+    }
+  }, [locationDetails, categorySearchParam, prevCategory, dispatch]);
 
   useEffect(() => {
-    // Use default coordinates
     dispatch(
       fetchNearbyLocations({
         latitude: DEFAULT_COORDINATES.latitude,
@@ -87,7 +98,6 @@ function ShoppingListing() {
   }, [dispatch, categorySearchParam]);
 
   useEffect(() => {
-    // Fetch user reviews for all locations
     const fetchUserReviews = async () => {
       if (!locationList?.length) return;
       
@@ -109,9 +119,7 @@ function ShoppingListing() {
   const selectedCategory =
     placeTypes.find((type) => type.id === categorySearchParam) || placeTypes[0];
 
-  // Sort locations based on selected sort option
   const sortedLocations = [...(locationList || [])].sort((a, b) => {
-    // First, sort by open/closed status if status filter is active
     if (filters.status && filters.status.length > 0) {
       const aIsOpen = a.opening_hours?.open_now;
       const bIsOpen = b.opening_hours?.open_now;
@@ -120,7 +128,6 @@ function ShoppingListing() {
       }
     }
 
-    // Then apply the selected sort option
     if (!sort) return 0;
 
     switch (sort) {
@@ -213,41 +220,38 @@ function ShoppingListing() {
   };
 
   return (
+    <div className="flex flex-col">
+      <div className="w-full bg-white py-4 px-6">
+        <h1 className="text-9xl font-koulen text-center text-text-orange">PUTCO</h1>
+        <h2 className="text-xl text-center font-koulen text-text-orange">ASK PUTCO. ASK PUTNAM</h2>
+      </div>
+
+      <div className="w-full bg-white py-4 px-8">
+  <div className="flex flex-wrap justify-evenly gap-4">
+    {placeTypes.map((type) => (
+      <Button
+        key={type.id}
+        variant={categorySearchParam === type.id ? "default" : "ghost"}
+        onClick={() => handleCategoryChange(type.id)}
+        className={`
+          uppercase font-koulen text-3xl
+          ${categorySearchParam === type.id 
+            ? 'bg-white text-text-orange underline decoration-text-orange' 
+            : 'text-text-orange  decoration-2'}
+          hover:bg-text-orange/10
+        `}
+      >
+        {type.label}
+      </Button>
+    ))}
+  </div>
+</div>
+
+
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
       <ProductFilter filters={filters} handleFilter={handleFilter} />
       <div className="bg-background w-full rounded-lg shadow-sm">
         <div className="p-4 border-b">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h2 className="text-lg font-extrabold">
-                Nearby {selectedCategory.label}
-              </h2>
-            </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex items-center gap-1"
-                >
-                  <Store className="h-4 w-4" />
-                  <span>{selectedCategory.label}</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-[200px]">
-                <DropdownMenuRadioGroup
-                  value={categorySearchParam}
-                  onValueChange={handleCategoryChange}
-                >
-                  {placeTypes.map((type) => (
-                    <DropdownMenuRadioItem value={type.id} key={type.id}>
-                      {type.label}
-                    </DropdownMenuRadioItem>
-                  ))}
-                </DropdownMenuRadioGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground">
               {filteredLocations.length} Locations
@@ -301,10 +305,17 @@ function ShoppingListing() {
         </div>
       </div>
       <ProductDetailsDialog
-        open={openDetailsDialog}
-        setOpen={setOpenDetailsDialog}
-        productDetails={locationDetails}
-      />
+  open={openDetailsDialog}
+  onOpenChange={(open) => {
+    if (!open) {
+      // Clear details when dialog closes
+      dispatch({ type: 'locations/clearLocationDetails' });
+    }
+    setOpenDetailsDialog(open);
+  }}
+  productDetails={locationDetails}
+/>    
+    </div>
     </div>
   );
 }

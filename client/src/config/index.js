@@ -59,11 +59,10 @@ export const addProductFormElements = [
     name: "category",
     componentType: "select",
     options: [
-      { id: "men", label: "Men" },
-      { id: "women", label: "Women" },
-      { id: "kids", label: "Kids" },
-      { id: "accessories", label: "Accessories" },
-      { id: "footwear", label: "Footwear" },
+      { id: "restaurant", label: "Restaurants" },
+      { id: "home_goods_store", label: "Decorations" },
+      { id: "beauty_salon", label: "Salons" },
+      { id: "clothing_store", label: "Clothes" },
     ],
   },
   {
@@ -216,23 +215,7 @@ export const DEFAULT_COORDINATES = {
 
 export const placeTypes = [
   { id: "restaurant", label: "Restaurants" },
-  { id: "cafe", label: "Cafes" },
-  { id: "bar", label: "Bars" },
-  { id: "supermarket", label: "Supermarkets" },
-  { id: "shopping_mall", label: "Shopping Malls" },
-  { id: "convenience_store", label: "Convenience Stores" },
-  { id: "bakery", label: "Bakeries" },
-  { id: "clothing_store", label: "Clothing Stores" },
-  { id: "department_store", label: "Department Stores" },
-  { id: "electronics_store", label: "Electronics Stores" },
-  { id: "grocery_or_supermarket", label: "Grocery Stores" },
-  { id: "pharmacy", label: "Pharmacies" },
-  { id: "book_store", label: "Book Stores" },
-  { id: "home_goods_store", label: "Home Goods" },
-  { id: "furniture_store", label: "Furniture Stores" },
-  { id: "hardware_store", label: "Hardware Stores" },
-  { id: "pet_store", label: "Pet Stores" },
-  { id: "shoe_store", label: "Shoe Stores" },
-  { id: "jewelry_store", label: "Jewelry Stores" },
-  { id: "liquor_store", label: "Liquor Stores" }
+  { id: "home_goods_store", label: "Home Decoration" },
+  { id: "clothing_store", label: "Shopping" },
+  { id: "beauty_salon", label: "Salons" },
 ];
