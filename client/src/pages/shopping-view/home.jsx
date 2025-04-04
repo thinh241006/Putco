@@ -156,6 +156,7 @@ function ShoppingHome() {
             backgroundImage: `url(${catebg})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
+            marginBottom: '100px',
           }}
         >
           <div className="container mx-auto px-4">
