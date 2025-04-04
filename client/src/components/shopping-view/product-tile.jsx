@@ -51,7 +51,7 @@ function ShoppingProductTile({
           )}
         </div>
         <CardContent className="p-4">
-          <h2 className="text-2xl font-koulen mb-2 text-white">{product?.name}</h2>
+          <h2 className="text-3xl font-koulen text-center mb-2 text-white">{product?.name}</h2>
           <div className="flex items-center gap-2 mb-2">
             <MapPin className="w-4 h-4" />
             <span className="text-[16px] text-black font-koulen">
@@ -68,8 +68,7 @@ function ShoppingProductTile({
       <CardFooter>
         <Button
           onClick={() => handleGetProductDetails(product?.place_id)}
-
-          className="w-full text-black font-koulen bg-text-light text-2xl border-b-4 border- border-navbar hover:bg-navbar hover:text-text-light transition-colors duration-300"  
+          className="w-full text-black font-koulen bg-text-light text-xl border-b-4 border- border-navbar hover:bg-navbar hover:text-text-light transition-colors duration-300"  
         >
           View Details
         </Button>

@@ -65,19 +65,7 @@ export const addProductFormElements = [
       { id: "clothing_store", label: "Clothes" },
     ],
   },
-  {
-    label: "Brand",
-    name: "brand",
-    componentType: "select",
-    options: [
-      { id: "nike", label: "Nike" },
-      { id: "adidas", label: "Adidas" },
-      { id: "puma", label: "Puma" },
-      { id: "levi", label: "Levi's" },
-      { id: "zara", label: "Zara" },
-      { id: "h&m", label: "H&M" },
-    ],
-  },
+
   {
     label: "Price",
     name: "price",
@@ -140,16 +128,6 @@ export const filterOptions = {
   status: [
     { id: "open", label: "Open Now" },
     { id: "closed", label: "Closed" },
-  ],
-  brand: [
-    { id: "starbucks", label: "Starbucks" },
-    { id: "mcdonalds", label: "McDonald's" },
-    { id: "subway", label: "Subway" },
-    { id: "dunkin", label: "Dunkin'" },
-    { id: "chipotle", label: "Chipotle" },
-    { id: "panera", label: "Panera Bread" },
-    { id: "wendys", label: "Wendy's" },
-    { id: "burgerking", label: "Burger King" },
   ],
   rating: [
     { id: "4.5", label: "4.5+ Stars" },
