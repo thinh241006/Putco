@@ -18,6 +18,7 @@ function ShoppingProductTile({
     : fallbackImage;
 
   return (
+
     <Card className="w-full max-w-sm mx-auto bg-listyellow">
       <div onClick={() => handleGetProductDetails(product?.place_id)}>
         <div className="relative">

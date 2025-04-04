@@ -28,6 +28,7 @@ import footerBg from "../../assets/footerbg.png";
 import catebg from "../../assets/catebg.jpg";
 import '@fontsource/koulen';
 
+
 const categoriesWithIcon = [
   { id: "restaurant", label: "Restaurant", icon: () => <img src={Utensils} alt="Utensils" className="w-24 h-24" /> },
   { id: "home_goods_store", label: "Decorations", icon: () => <img src={Lamp} alt="Lamp" className="w-24 h-24" /> },
@@ -107,7 +108,6 @@ function ShoppingHome() {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow">
-        {/* Banner Slider */}
         <div className="relative w-full h-[600px] overflow-hidden">
           {featureImageList && featureImageList.length > 0
             ? featureImageList.map((slide, index) => (
