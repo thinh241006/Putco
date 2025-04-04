@@ -18,6 +18,7 @@ function ShoppingProductTile({
     : fallbackImage;
 
   return (
+
     <Card className="w-full max-w-sm mx-auto bg-listyellow">
       <div onClick={() => handleGetProductDetails(product?.place_id)}>
         <div className="relative">
@@ -67,6 +68,7 @@ function ShoppingProductTile({
       <CardFooter>
         <Button
           onClick={() => handleGetProductDetails(product?.place_id)}
+
           className="w-full text-black font-koulen bg-text-light text-2xl border-b-4 border- border-navbar hover:bg-navbar hover:text-text-light transition-colors duration-300"  
         >
           View Details

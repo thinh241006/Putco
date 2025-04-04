@@ -68,7 +68,7 @@ function ShoppingListing() {
   }
 
   function handleGetProductDetails(getCurrentProductId) {
-    setOpenDetailsDialog(false); // Close dialog first
+    setOpenDetailsDialog(false); 
     dispatch(fetchLocationDetails(getCurrentProductId));
   }
 
@@ -118,6 +118,7 @@ function ShoppingListing() {
 
   const selectedCategory =
     placeTypes.find((type) => type.id === categorySearchParam) || placeTypes[0];
+
 
   const sortedLocations = [...(locationList || [])].sort((a, b) => {
     if (filters.status && filters.status.length > 0) {
