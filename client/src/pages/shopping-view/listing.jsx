@@ -159,9 +159,12 @@ function ShoppingListing() {
   });
 
   const filteredLocations = sortedLocations.filter((location) => {
+    // exclude Walmart locations
+    const isWalmart = /walmart|supercenter|walh|walm/i.test(location.name.toLowerCase());
+    if (isWalmart) return false;
+  
     if (!filters || Object.keys(filters).length === 0) return true;
-
-    // Status filter
+  
     if (filters.status && filters.status.length > 0) {
       const isOpen = location.opening_hours?.open_now;
       if (!filters.status.includes(isOpen ? "open" : "closed")) {
@@ -169,15 +172,6 @@ function ShoppingListing() {
       }
     }
 
-    // Rating filter
-    if (filters.rating && filters.rating.length > 0) {
-      const minRating = Math.min(...filters.rating.map(r => parseFloat(r)));
-      if (!location.rating || location.rating < minRating) {
-        return false;
-      }
-    }
-
-    // Price filter
     if (filters.price && filters.price.length > 0) {
       const priceLevel = location.price_level || 0;
       if (!filters.price.includes(priceLevel.toString())) {
@@ -229,9 +223,35 @@ function ShoppingListing() {
     }
   };
 
+  const categories = [
+    { id: "restaurant", label: "RESTAURANTS" },
+    { id: "beauty_salon", label: "BEAUTY SALONS" },
+    { id: "home_goods_store", label: "HOME DECORATIONS" },
+    { id: "clothing_store", label: "CLOTHES" }
+  ];
+
   return (
     <div className="flex flex-col">
       {/* Header and category buttons remain the same */}
+      <div className="text-center py-6 bg-white">
+        <h1 className="text-9xl font-koulen text-text-orange">PUTCO</h1>
+        <p className="text-2xl font-koulen text-text-orange">ASK PUTCO. ASK PUTNAM</p>
+        <div className="flex justify-evenly mt-6 space-x-4">
+          {categories.map((category) => (
+            <button
+              key={category.id}
+              onClick={() => handleCategoryChange(category.id)}
+              className={`px-4 font-koulen text-3xl border-b-4 ${
+                categorySearchParam === category.id
+                  ? "border-text-orange text-text-orange font-koulen"
+                  : "border-transparent text-text-orange hover:text-black"
+              }`}
+            >
+              {category.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
         <ProductFilter filters={filters} handleFilter={handleFilter} />
