@@ -31,9 +31,9 @@ import '@fontsource/koulen';
 
 const categoriesWithIcon = [
   { id: "restaurant", label: "Restaurant", icon: () => <img src={Utensils} alt="Utensils" className="w-24 h-24" /> },
+  { id: "beauty_salon", label: "Salons", icon: () => <img src={Salon} alt="Salon" className="w-24 h-24" /> },
   { id: "home_goods_store", label: "Decorations", icon: () => <img src={Lamp} alt="Lamp" className="w-24 h-24" /> },
-  { id: "clothing_store", label: "Shopping", icon: () => <img src={Dress} alt="Dress" className="w-24 h-24" /> },
-  { id: "beauty_salon", label: "Salons", icon: () => <img src={Salon} alt="Salon" className="w-24 h-24" /> }
+  { id: "clothing_store", label: "Shopping", icon: () => <img src={Dress} alt="Dress" className="w-24 h-24" /> }
 ];
 
 function ShoppingHome() {

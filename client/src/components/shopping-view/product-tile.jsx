@@ -11,15 +11,35 @@ function ShoppingProductTile({
 }) {
   const fallbackImage = "https://via.placeholder.com/300x200?text=No+Image+Available";
   
-  // Get the first photo reference if available
+  
   const photoReference = product?.photos?.[0]?.photo_reference;
   const imageUrl = photoReference
     ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photoReference}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`
     : fallbackImage;
 
-  return (
+    const getCardColor = () => {
+      if (!product?.types) return "bg-listyellow";
+      const categoryPriority = [
+        { types: ["department_store", "supermarket"], color: "bg-shopping" },
+        { types: ["clothing_store", "shoe_store"], color: "bg-shopping" },
+        { types: ["pharmacy", "drugstore"], color: "bg-salon" },
+        { types: ["home_goods_store", "furniture_store"], color: "bg-deco" },
+        { types: ["hardware_store"], color: "bg-deco" },
+        { types: ["beauty_salon", "spa"], color: "bg-salon" },
+        { types: ["restaurant", "food"], color: "bg-listyellow" }
+      ];
+    
+      for (const category of categoryPriority) {
+        if (category.types.some(type => product.types.includes(type))) {
+          return category.color;
+        }
+      }
+    
+      return "bg-listyellow";
+    };
 
-    <Card className="w-full max-w-sm mx-auto bg-listyellow">
+  return (
+    <Card className={`w-full max-w-sm mx-auto ${getCardColor()} !important`}>
       <div onClick={() => handleGetProductDetails(product?.place_id)}>
         <div className="relative">
           {photoReference ? (
