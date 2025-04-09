@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import AuthLayout from "./components/auth/layout";
 import AuthLogin from "./pages/auth/login";
 import AuthRegister from "./pages/auth/register";
@@ -22,10 +22,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import PaypalReturnPage from "./pages/shopping-view/paypal-return";
 import PaymentSuccessPage from "./pages/shopping-view/payment-success";
 import SearchProducts from "./pages/shopping-view/search";
+
+import HomePage from "./pages/social-media-view/home/home-page"
+import NotificationPage from "./pages/social-media-view/notification/notification-page";  // Adjust the relative path
+import ProfilePage from "./pages/social-media-view/profile/profile-page";  // Adjust the relative path
+import RightPanel from "./components/social-media-view/right-panel";
 import CouponPage from './pages/admin-view/CouponPage';
 import CustomLocationsPage from './pages/admin-view/CustomLocationsPage';
 
 function App() {
+
   const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
   );
@@ -92,6 +98,17 @@ function App() {
           <Route path="paypal-return" element={<PaypalReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
           <Route path="search" element={<SearchProducts />} />
+           {/* Social Media Routes */}
+           <Route path="social-media" element={
+          <div className="flex">
+            <HomePage />
+            <RightPanel /> {/* RightPanel appears alongside HomePage */}
+          </div>
+        } />
+
+         <Route path="social-media/notifications" element={  <NotificationPage /> } />
+         <Route path="social-media/profile/:username" element={  <ProfilePage /> } />
+          
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />

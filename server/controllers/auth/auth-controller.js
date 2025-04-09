@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
+const generateTokenAndSetCookie = require ("../../lib/utils/generateToken.js");
 
 //register
 const registerUser = async (req, res) => {
@@ -37,12 +38,21 @@ const registerUser = async (req, res) => {
       email,
       password: hashPassword,
     });
-
+    generateTokenAndSetCookie(newUser._id, res);
     await newUser.save();
     res.status(200).json({
-      success: true,
-      message: "Registration successful",
+    success: true,
+    message: "Registration successful",
     });
+    //res.status(201).json({
+     // _id: newUser._id,
+     // userName: newUser.userName,
+     // email: newUser.email,
+     // followers: newUser.followers,
+     // following: newUser.following,
+     // profileImg: newUser.profileImg,
+     // coverImg: newUser.coverImg,
+    //});
   } catch (e) {
     console.log(e);
     // Handle Mongoose validation errors
@@ -93,7 +103,6 @@ const loginUser = async (req, res) => {
       "CLIENT_SECRET_KEY",
       { expiresIn: "60m" }
     );
-
     res.cookie("token", token, { httpOnly: true, secure: false }).json({
       success: true,
       message: "Logged in successfully",
@@ -122,6 +131,15 @@ const logoutUser = (req, res) => {
   });
 };
 
+const getMe = async (req, res) => {
+	try {
+		const user = await User.findById(req.user._id).select("-password");
+		res.status(200).json(user);
+	} catch (error) {
+		console.log("Error in getMe controller", error.message);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
+};
 //auth middleware
 const authMiddleware = async (req, res, next) => {
   const token = req.cookies.token;
@@ -143,4 +161,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { registerUser, loginUser, logoutUser, authMiddleware };
+module.exports = { registerUser, loginUser, logoutUser, getMe, authMiddleware };

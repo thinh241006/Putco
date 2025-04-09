@@ -80,6 +80,7 @@ export const API_ENDPOINTS = {
       delete: (reviewId) => `${API_BASE_URL}/shop/reviews/${reviewId}`,
       update: (reviewId) => `${API_BASE_URL}/shop/reviews/${reviewId}`,
     },
+
   },
   common: {
     feature: {

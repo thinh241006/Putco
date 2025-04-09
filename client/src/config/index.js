@@ -97,8 +97,13 @@ export const shoppingViewHeaderMenuItems = [
   },
   {
     id: "products",
-    label: "Products",
+    label: "Services",
     path: "/shop/listing",
+  },
+  {
+    id: "social-media",
+    label: "PutMedia",  // This is the navigation link to PutMedia
+    path: "/shop/social-media/",
   },
   {
     id: "search",

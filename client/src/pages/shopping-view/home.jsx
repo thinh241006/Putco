@@ -65,6 +65,29 @@ function ShoppingHome() {
       category: [categoryItem.id],
     };
     sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+
+    navigate(`/shop/listing`);
+  }
+
+  function handleGetProductDetails(getCurrentProductId) {
+    dispatch(fetchProductDetails(getCurrentProductId));
+  }
+  function handleAddtoCart(getCurrentProductId) {
+    dispatch(
+      addToCart({
+        userId: user?.id,
+        productId: getCurrentProductId,
+        quantity: 1,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchCartItems(user?.id));
+        toast({
+          title: "Product is added to cart",
+        });
+      }
+    });
+
     window.scrollTo(0, 0);
     navigate(`/shop/listing?category=${categoryItem.id}`);
   }
@@ -131,7 +154,7 @@ function ShoppingHome() {
             <ChevronRightIcon className="w-4 h-4" />
           </Button>
         </div>
-
+        
         {/* Categories section */}
         <section
           className="py-12 bg-white mt-20"
