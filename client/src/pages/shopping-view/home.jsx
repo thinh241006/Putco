@@ -134,7 +134,7 @@ function ShoppingHome() {
 
         {/* Categories section */}
         <section
-          className="py-12 bg-white"
+          className="py-12 bg-white mt-20"
           style={{
             backgroundImage: `url(${catebg})`,
             backgroundSize: "cover",
