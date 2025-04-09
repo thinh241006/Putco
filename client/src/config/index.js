@@ -197,3 +197,10 @@ export const placeTypes = [
   { id: "clothing_store", label: "Shopping" },
   { id: "beauty_salon", label: "Salons" },
 ];
+
+
+const config = {
+  apiUrl: `http://localhost:${import.meta.env.VITE_SERVER_PORT || '5300'}/api`
+}
+
+export default config
