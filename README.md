@@ -8,36 +8,67 @@ Project compose of 2 services:
 See the folder structure here:
 
 ```bash
-client/
-├── src/
-│   ├── components/         # Reusable UI components
-│   │   ├── auth/          # Authentication components
-│   │   ├── admin-view/    # Admin dashboard components
-│   │   ├── shopping-view/ # Shopping interface components
-│   │   └── common/        # Shared components
-│   ├── pages/            # Page components
-│   │   ├── auth/         # Login/Register pages
-│   │   ├── admin-view/   # Admin dashboard pages
-│   │   └── shopping-view/# Shopping pages
-│   ├── store/            # Redux store
-│   │   └── auth-slice/   # Authentication state management
-│   └── App.jsx           # Main application component
-
-server/
-├── controllers/          # Business logic
-│   ├── auth/            # Authentication controllers
-│   ├── admin/           # Admin controllers
-│   └── shop/            # Shopping controllers
-├── models/              # Database models
-│   ├── User.js          # User model
-│   ├── Product.js       # Product model
-│   └── Order.js         # Order model
-├── routes/              # API routes
-│   ├── auth/           # Authentication routes
-│   ├── admin/          # Admin routes
-│   └── shop/           # Shopping routes
-└── server.js           # Main server file
+/Users/quangnguyen/Documents/Putco/
+├── client/                      # Frontend React application
+│   ├── src/
+│   │   ├── components/          # React components
+│   │   ├── services/            # API service functions
+│   │   ├── store/               # Redux store
+│   ...
+├── server/                      # Backend application
+│   ├── app.js                   # Express app configuration
+│   ├── index.js                 # Server entry point
+│   ├── config/                  # Configuration files
+│   ├── controllers/             # Route controllers
+│   │   ├── admin/               # Admin-specific controllers
+│   ├── middleware/              # Express middleware
+│   ├── models/                  # Database models
+│   ├── routes/                  # API routes
+│   │   ├── admin/               # Admin-specific routes
+│   ...
 ```
+
+<hr />
+
+## Project Features
+
+**Putco for Customers:**
+- Reviews of the Months: Attract more similar customers to businesses
+- Crowd-sourcing hub for business: Create a big hub for local businesses / non target businesses
+- Filter + Assortion: Suggest and show tailor experiences for person
+- User reviews: Reviews are posted by freedom of speech with strict human moderation
+
+**Putco for Business (Admin endpoints):** 
+- Adding coupons for businesses: boost advertisements and collaboration for bot-supported reviews
+- Adding new locations for businesses: increase appearances for business 
+-> Activate this functionality by running a createAdmin script on backend side
+-> Logging in as admin will lead to this business adminstration platform
+  
+<hr />
+
+## Project Tech Stacks
+
+- Google Map API: Fetch locations from the Google Cloud Platform
+- Google Cloud Platform: Support monitoring user access and billing of Google Map API and Putco's services usage
+- Cloudinary: Free image storage for reviews and custom locations
+- Docker: Containerization & deployment tools
+- MongoDB Atlas: No-SQL Database for frequent data access/changes for user reviews / coupons / custom locations
+- ExpressJs: Interface designs for RESTful API endpoints to manage services
+- ReactJs: Responsive and non-static visualizing user interface design
+- NodeJs: Serverside scripting language for network routing
+
+<hr />
+
+# Future Enhancement:
+
+- Docker → Containerize services + scalable service by service
+- Kubernetes → Driving containers
+- Nginx → Driving / Load balancing users
+- Meta Graph API → social media integration for coupons / advertisement
+- Fully functional social media + new locations adding
+- Reintegrate the database coupons
+- AI moderation + AI generative for coupon’s QR code and social media
+→ Cheap, Scalable, Expandable, Easy to use
 
 <hr />
 
@@ -61,8 +92,12 @@ git checkout <your-name>
 
 **Requirements**:
 
-- NodeJs
+- NodeJs + ExpressJS + Vite
 - React
+- GoogleMap API
+- TailwindCSS
+- Cloudinary API
+- MongoDB Atlas API
 
 **Steps**:
 
@@ -79,6 +114,41 @@ cd Putify
 ```
 
 - Before running add each .env file into Client Folder and Server Folder respectively
+# .env file for client:
+  
+```bash
+# Server Configuration
+VITE_SERVER_PORT=5300
+VITE_CLIENT_PORT=5173
+VITE_CLIENT_PORT_ALT=5174
+
+# Google Maps Configuration
+VITE_GOOGLE_MAPS_API_KEY={YOUR GOOGLE MAP API KEY}
+```
+
+# .env for server
+```bash
+# Server Configuration
+PORT=5300
+CLIENT_PORT=5173
+CLIENT_PORT_ALT=5174
+
+# Database Configuration
+MONGODB_URI={YOUR MONGODB_URI}
+
+# Authentication Configuration
+JWT_SECRET=your_jwt_secret_key
+JWT_EXPIRE=7d
+COOKIE_EXPIRE=7
+
+# Cloudinary Configuration
+CLOUDINARY_CLOUD_NAME={YOUR CLOUDINARY NAME}
+CLOUDINARY_API_KEY={YOUR API KEY}
+CLOUDINARY_API_SECRET={YOUR API SECRET}
+
+# Google Maps API Configuration
+GOOGLE_MAPS_API_KEY={YOUR GOOGLE API KEY}
+```
 
 - Run the following commands to install all dependencies (Make sure your machine has Node Package Manager installed):
 
