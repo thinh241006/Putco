@@ -59,7 +59,7 @@ See the folder structure here:
 
 <hr />
 
-# Future Enhancement:
+## Future Enhancement:
 
 - Docker → Containerize services + scalable service by service
 - Kubernetes → Driving containers
@@ -87,6 +87,8 @@ git checkout <your-name>
 
 3. Commit and push to your branch only (You should see your name next to current branch in terminal)
 4. Create a pull request to the main branch and wait for approval, done!
+
+<hr />
 
 ## Local Installation
 
