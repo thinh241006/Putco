@@ -104,13 +104,13 @@ git checkout <your-name>
 - Clone project to local machine:
 
 ```bash
-git clone https://github.com/qu-ngx/Putify.git
+git clone https://github.com/qu-ngx/Putco.git
 ```
 
 - Open your terminal and run the following commands:
 
 ```bash
-cd Putify
+cd Putco
 ```
 
 - Before running add each .env file into Client Folder and Server Folder respectively
@@ -143,11 +143,11 @@ COOKIE_EXPIRE=7
 
 # Cloudinary Configuration
 CLOUDINARY_CLOUD_NAME={YOUR CLOUDINARY NAME}
-CLOUDINARY_API_KEY={YOUR API KEY}
-CLOUDINARY_API_SECRET={YOUR API SECRET}
+CLOUDINARY_API_KEY={YOUR CLOUDINARY API KEY}
+CLOUDINARY_API_SECRET={YOUR MAP API SECRET}
 
 # Google Maps API Configuration
-GOOGLE_MAPS_API_KEY={YOUR GOOGLE API KEY}
+GOOGLE_MAPS_API_KEY={YOUR GOOGLE MAP API KEY}
 ```
 
 - Run the following commands to install all dependencies (Make sure your machine has Node Package Manager installed):
